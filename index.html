@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I'm Sorry - Beautiful Apology</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fade-in-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse-heart {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    @keyframes float-up {
+      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      50% { transform: translateY(-50px) scale(1.1); opacity: 1; }
+      100% { transform: translateY(-100px) scale(1); opacity: 0; }
+    }
+
+    .animate-fade-in-up { animation: fade-in-up 0.8s ease-out; }
+    .animate-pulse-heart { animation: pulse-heart 2s ease-in-out infinite; }
+
+    .heart {
+      width: 20px;
+      height: 18px;
+      position: relative;
+      display: inline-block;
+      color: currentColor;
+    }
+    .heart:before,
+    .heart:after {
+      content: '';
+      width: 12px;
+      height: 19px;
+      position: absolute;
+      left: 10px;
+      top: 0;
+      background: currentColor;
+      border-radius: 10px 10px 0 0;
+      transform: rotate(-45deg);
+      transform-origin: 0 100%;
+    }
+    .heart:after {
+      left: 0;
+      transform: rotate(45deg);
+      transform-origin: 100% 100%;
+    }
+
+    .sparkle {
+      width: 16px;
+      height: 16px;
+      position: relative;
+      display: inline-block;
+    }
+    .sparkle:before,
+    .sparkle:after {
+      content: '';
+      position: absolute;
+      background: currentColor;
+    }
+    .sparkle:before { width: 2px; height: 16px; left: 7px; top: 0; }
+    .sparkle:after { width: 16px; height: 2px; left: 0; top: 7px; }
+
+    /* Floating cute hearts */
+    .floating-heart {
+      position: absolute;
+      font-size: 20px;
+      color: #ec4899; /* Tailwind pink-500 */
+      opacity: 0.7;
+      animation: float-up 6s linear infinite;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100 relative overflow-hidden">
+    
+    <!-- Floating Hearts Background -->
+    <div id="hearts-container" class="absolute inset-0 pointer-events-none"></div>
+
+    <div class="relative z-10 min-h-screen flex items-center justify-center p-4">
+      <div class="max-w-4xl w-full">
+        <!-- Main Card -->
+        <div class="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 md:p-12 border border-white/20">
+          <!-- Header -->
+          <div class="text-center mb-8">
+            <div class="flex justify-center items-center gap-2 mb-4">
+              <div class="sparkle w-8 h-8 text-pink-500 animate-pulse"></div>
+              <h1 class="text-4xl md:text-6xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent">
+                I'm Sorry
+              </h1>
+              <div class="sparkle w-8 h-8 text-pink-500 animate-pulse"></div>
+            </div>
+            <p class="text-xl text-gray-600 font-light">
+              For the most amazing person in my world
+            </p>
+          </div>
+
+          <!-- Interactive Apology Button -->
+          <div class="text-center mb-8">
+            <button
+              id="apology-btn"
+              class="group relative inline-flex items-center gap-3 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            >
+              <div class="heart w-5 h-5 group-hover:animate-pulse-heart"></div>
+              Click to read my apology
+              <div class="heart w-5 h-5 group-hover:animate-pulse-heart"></div>
+            </button>
+          </div>
+
+          <!-- Apology Messages -->
+          <div id="apology-message" class="hidden animate-fade-in-up bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-6 md:p-8 mb-8 border-l-4 border-pink-400">
+            <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+              <p class="text-xl mb-4"><strong>My Dearest Love,</strong></p>
+              <p class="mb-4">I know I messed up, and I can't find the right words to express how truly sorry I am. 
+                You mean the world to me, and seeing you hurt because of my actions breaks my heart.</p>
+              <p class="mb-4">I promise to do better, to listen more, and to cherish every moment we have together. 
+                You deserve all the love, respect, and happiness in the world, and I want to be the one 
+                to give that to you.</p>
+              <p class="mb-4">Please forgive me. Let me make it up to you and show you how much you truly mean to me.</p>
+              <p class="text-lg font-semibold text-pink-600">
+                With all my love and deepest apologies,<br />Your devoted partner
+              </p>
+            </div>
+          </div>
+
+          <!-- Second Apology Message -->
+          <div id="apology-message-2" class="hidden animate-fade-in-up bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 md:p-8 mb-8 border-l-4 border-purple-400">
+            <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+              <p class="text-xl mb-4"><strong>My Sweetheart,</strong></p>
+              <p class="mb-4">I regret my mistakes more than I can say. If I could take back the hurt, I would do it in a heartbeat.  
+                You are my safe place, my joy, and my everything.</p>
+              <p class="mb-4">I want to build a future filled with laughter, patience, and endless love.  
+                Please know that I am learning, and I will keep becoming the partner you deserve.</p>
+              <p class="text-lg font-semibold text-purple-600">
+                Forever yours,<br />With endless love
+              </p>
+            </div>
+          </div>
+
+          <!-- Interactive Links -->
+          <div class="grid md:grid-cols-2 gap-4">
+            <!-- Another Apology -->
+            <button
+              id="apology-btn-2"
+              class="group flex items-center justify-center gap-3 bg-gradient-to-r from-purple-400 to-indigo-500 hover:from-purple-500 hover:to-indigo-600 text-white font-medium px-6 py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            >
+              <div class="heart w-5 h-5 animate-pulse-heart"></div>
+              <span>Another Apology</span>
+            </button>
+
+            <!-- Can You Forgive Me -->
+            <div id="forgive-section" class="flex flex-col items-center justify-center bg-gradient-to-r from-green-100 to-green-200 rounded-xl shadow-lg p-6">
+              <p class="mb-4 text-gray-700 font-medium text-lg">Can you forgive me? 🥺</p>
+              <div class="flex gap-4">
+                <button id="yes-btn" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full shadow-md">Yes</button>
+                <button id="no-btn" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full shadow-md relative">No</button>
+              </div>
+              <p id="thankyou-msg" class="hidden mt-4 text-pink-600 font-semibold text-lg">
+                Thank you so much Laki ko, I love you so much more MWAAAAAAAA!!!!!!
+              </p>
+            </div>
+          </div>
+
+          <!-- Bottom Message -->
+          <div class="text-center mt-8 p-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl border border-yellow-200">
+            <p class="text-gray-600 italic">
+              "Love is not about perfection, it's about forgiveness and growing together. 
+              I choose you, every single day."
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Floating cute hearts
+    function createFloatingHearts() {
+      const container = document.getElementById('hearts-container');
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.innerHTML = '❤';
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.bottom = '-20px';
+        heart.style.fontSize = (15 + Math.random() * 20) + 'px';
+        heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(heart);
+      }
+    }
+
+    // Toggle apology messages
+    function toggleMessage() {
+      const msg1 = document.getElementById('apology-message');
+      const msg2 = document.getElementById('apology-message-2');
+      if (!msg1.classList.contains('hidden')) {
+        msg1.classList.add('hidden');
+        msg2.classList.remove('hidden');
+      } else if (!msg2.classList.contains('hidden')) {
+        msg2.classList.add('hidden');
+        msg1.classList.remove('hidden');
+      } else {
+        msg1.classList.remove('hidden');
+      }
+    }
+
+    // Handle forgive me buttons
+    function moveNoButton() {
+      const noBtn = document.getElementById('no-btn');
+      const x = Math.random() * 150 - 75;
+      const y = Math.random() * 150 - 75;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function sayThankYou() {
+      document.getElementById('thankyou-msg').classList.remove('hidden');
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      createFloatingHearts();
+
+      document.getElementById('apology-btn').addEventListener('click', function() {
+        document.getElementById('apology-message').classList.remove('hidden');
+        document.getElementById('apology-message-2').classList.add('hidden');
+      });
+
+      document.getElementById('apology-btn-2').addEventListener('click', function() {
+        document.getElementById('apology-message-2').classList.remove('hidden');
+        document.getElementById('apology-message').classList.add('hidden');
+      });
+
+      document.getElementById('no-btn').addEventListener('mouseenter', moveNoButton);
+      document.getElementById('no-btn').addEventListener('click', moveNoButton);
+      document.getElementById('yes-btn').addEventListener('click', sayThankYou);
+    });
+  </script>
+</body>
+</html>
